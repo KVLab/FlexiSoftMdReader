@@ -1,21 +1,31 @@
-# Visual Studio
+# Visual Studio IDE and local files
 .vs/
 .vscode/
 *.vcxproj.user
+*.vcxproj.filters.user
 *.sln.DotSettings.user
 *.VC.db
 *.VC.VC.opendb
 
-# Build outputs
+# Build outputs and artifacts
 [Dd]ebug/
 [Rr]elease/
 [Bb]in/
 [Oo]bj/
+*.obj
 *.exe
 *.dll
 *.lib
 *.pdb
 *.ilk
+*.log
+
+# Build cache
+*.ipch
+*.tlog
+*.lastbuildstate
+*.FileListAbsolute.txt
+vc*.pdb
 
 # IDE
 .idea/
@@ -27,6 +37,6 @@
 .DS_Store
 Thumbs.db
 
-# Project specific
-*.ipch
-*.tlog
+# Visual Studio specific
+.vs/
+*.sln.DotSettings

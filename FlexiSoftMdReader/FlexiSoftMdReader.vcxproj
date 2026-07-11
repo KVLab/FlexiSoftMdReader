@@ -67,9 +67,6 @@
       <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>call "C:\Users\vlada\Documents\python\FlexiSoft_runtime\sync_installer_stage.bat"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
