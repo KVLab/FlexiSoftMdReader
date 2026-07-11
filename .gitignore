@@ -40,6 +40,9 @@ FlexiSoftMdReader/[Rr]elease/
 .DS_Store
 Thumbs.db
 
+# Wiki files (managed in GitHub Wiki, not source repo)
+docs/wiki/
+
 # BUT: Track the dist/ folder and release/ folder
 !dist/
 !dist/**

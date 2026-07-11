@@ -1,32 +1,32 @@
 # Examples
 
-This directory contains example Markdown files and usage documentation for FlexiSoftMdReader.
+This directory contains usage documentation and example Markdown files for FlexiSoftMdReader.
 
 ## Usage Examples
 
-- **[basic_usage.md](usage/basic_usage.md)** – Command line usage examples
-- **[flexisoft_runtime_usage.md](usage/flexisoft_runtime_usage.md)** – How FlexiSoft Runtime uses the viewer
-- **[font_usage.md](usage/font_usage.md)** – Font handling and fallback behavior
+- **usage_basic.md** – Basic command line usage, paths, relative/absolute paths
+- **usage_with_flexisoft_runtime.md** – How FlexiSoft Runtime uses the viewer
+- **usage_fonts.md** – Font handling, font files, fallback behavior
 
-## Sample Markdown Files
+## Example Markdown Files
 
-Example Markdown documents demonstrating supported syntax:
+Demonstrating Markdown syntax supported by FlexiSoftMdReader:
 
-- **[example_basic.md](markdown/example_basic.md)** – Headings, paragraphs, lists, code
-- **[example_tables.md](markdown/example_tables.md)** – Table examples
-- **[example_images.md](markdown/example_images.md)** – Image syntax and relative paths
+- **markdown_basic.md** – Headings, paragraphs, lists, code blocks
+- **markdown_tables.md** – Table rendering examples
+- **markdown_images.md** – Image syntax and relative path resolution
 
 ### Running Examples
 
-```
-FlexiSoftMdReader.exe "examples\markdown\example_basic.md"
-FlexiSoftMdReader.exe "examples\markdown\example_tables.md"
-FlexiSoftMdReader.exe "examples\markdown\example_images.md"
+```batch
+FlexiSoftMdReader.exe "examples\markdown_basic.md"
+FlexiSoftMdReader.exe "examples\markdown_tables.md"
+FlexiSoftMdReader.exe "examples\markdown_images.md"
 ```
 
 ## Image Assets
 
-Sample images used in examples are located in `markdown/assets/`:
+Sample images located in `assets/`:
 
-- `sample_image.png`
-- `warning_icon.png`
+- `sample_image.png` – Example image
+- `warning_icon.png` – Example icon
