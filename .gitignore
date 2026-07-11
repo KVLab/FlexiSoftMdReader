@@ -6,26 +6,29 @@
 *.sln.DotSettings.user
 *.VC.db
 *.VC.VC.opendb
+*.suo
 
-# Build outputs and artifacts
-[Dd]ebug/
-[Rr]elease/
-[Bb]in/
-[Oo]bj/
+# Build output folder (VS project Release configuration output)
+FlexiSoftMdReader/[Dd]ebug/
+FlexiSoftMdReader/[Rr]elease/
+
+# Build artifacts
 *.obj
-*.exe
-*.dll
-*.lib
 *.pdb
 *.ilk
+*.idb
+*.ipdb
+*.iobj
 *.log
-
-# Build cache
-*.ipch
 *.tlog
 *.lastbuildstate
 *.FileListAbsolute.txt
-vc*.pdb
+*.tmp
+*.bak
+
+# Object directories
+[Oo]bj/
+[Bb]in/
 
 # IDE
 .idea/
@@ -37,6 +40,8 @@ vc*.pdb
 .DS_Store
 Thumbs.db
 
-# Visual Studio specific
-.vs/
-*.sln.DotSettings
+# BUT: Track the dist/ folder and release/ folder
+!dist/
+!dist/**
+!release/
+!release/**

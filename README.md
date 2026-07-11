@@ -1,74 +1,55 @@
 # FlexiSoftMdReader
 
-A lightweight, standalone Markdown documentation viewer for Windows, with Windows XP compatibility.
+A small standalone Win32 Markdown viewer for local project documentation.
 
 ## Purpose
 
-FlexiSoftMdReader is a small Win32 utility used by FlexiSoft Runtime to display Markdown documentation (.md files) in a simple GUI window. It is especially useful on Windows XP environments where .md file associations and modern viewers may not be available.
+FlexiSoftMdReader opens `.md` files and displays their content in a simple graphical window. It is designed to work reliably on older machines, including Windows XP systems where Markdown file associations and modern viewers may not exist.
 
-**Note:** This is a small utility viewer for basic Markdown display, not a full GitHub Markdown renderer. It supports the most common Markdown syntax needed for documentation.
+Primary use: **opening documentation from FlexiSoft Runtime on Windows XP and other legacy systems**.
+
+This is a lightweight utility viewer—not a full GitHub Markdown renderer. It supports common Markdown syntax sufficient for practical documentation display.
 
 ## Features
 
-- Lightweight standalone executable (no dependencies)
-- Windows XP compatible (v5.01 subsystem)
-- Read-only Markdown viewer with optional font customization
-- Support for relative image paths
-- UTF-8 encoding support (with or without BOM)
-- Customizable fonts (TTF files or system fonts)
+- Standalone Win32 executable (no dependencies, no .NET, no WebView2)
+- Windows XP compatible
+- Read-only Markdown viewer with customizable fonts
+- Relative image support (PNG, JPG, GIF, BMP)
+- UTF-8 file encoding support
+- Simple, fast rendering
 
-## Supported Markdown Syntax
+## Quick Usage
+
+```
+FlexiSoftMdReader.exe "docs\README.md"
+FlexiSoftMdReader.exe "docs\MANUAL_cz.md" "Tahoma"
+FlexiSoftMdReader.exe "docs\MANUAL_uk.md" "fonts\NotoSans-Regular.ttf"
+FlexiSoftMdReader.exe "examples\markdown\example_images.md"
+```
+
+## Supported Markdown
 
 - **Headings**: `#`, `##`, `###`
 - **Lists**: Bullet lists (`-`, `*`) and numbered lists (`1.`, `2.`, etc.)
-- **Code**: Inline code (backticks) and fenced code blocks (triple backticks)
+- **Code**: Inline code and fenced code blocks
 - **Formatting**: Bold (`**text**`), italic (`*text*`)
-- **Tables**: Simple tables displayed as readable preformatted text
-- **Images**: `![alt text](relative/path.png)` (PNG, JPG/JPEG, GIF, BMP supported)
+- **Tables**: Simple tables displayed as readable text
+- **Images**: `![alt](relative/path.png)` with relative path resolution
 - **Links**: `[text](url)` displayed as text
 
-## Usage
+**Supported image formats**: PNG, JPG/JPEG, GIF, BMP
 
-### Basic Usage
+## Font Argument
 
-```
-FlexiSoftMdReader.exe "<path-to-document.md>"
-```
+The optional second argument specifies a font for the viewer window:
 
-### With Custom Font
+- **Font file** (`.ttf`): If the path exists and can be loaded as TrueType, it is used
+- **Font face name** (e.g., `"Tahoma"`): Uses the named system font
+- **Not provided**: Uses Windows default GUI font
+- **Fallback**: If a font cannot be loaded, reverts to a safe Windows font
 
-```
-FlexiSoftMdReader.exe "<path-to-document.md>" "<font-file-or-font-face>"
-```
-
-### Examples
-
-Open a Markdown file with default font:
-```
-FlexiSoftMdReader.exe "docs\README.md"
-```
-
-Open with a specific system font:
-```
-FlexiSoftMdReader.exe "docs\MANUAL_cz.md" "Tahoma"
-```
-
-Open with a TrueType font file:
-```
-FlexiSoftMdReader.exe "docs\MANUAL_uk.md" "fonts\NotoSans-Regular.ttf"
-```
-
-## Font Handling
-
-The program supports three font modes:
-
-1. **No font argument**: Uses Windows default GUI font
-2. **Font file (.ttf)**: If the path exists and can be loaded as a TrueType font, it is used
-3. **Font face name**: If no matching file is found, the name is treated as a system font face
-
-If a font cannot be loaded, the application automatically falls back to a safe Windows system font.
-
-## Image Support
+## Image Paths
 
 Images are referenced with relative paths:
 
@@ -77,105 +58,88 @@ Images are referenced with relative paths:
 ![Example](../shared/example.jpg)
 ```
 
-Image paths are resolved relative to the Markdown file's directory, not the executable location.
+Image paths are resolved relative to the Markdown file's directory.
 
-Supported image formats: **PNG, JPG/JPEG, GIF, BMP**
+## File Behavior
 
-## Build Requirements
+- Opens files in **read-only mode**
+- Accepts **UTF-8 with or without BOM**
+- **Does not modify** files
+- **Does not change** file associations
+- Resolves relative image paths from the Markdown file directory
 
-- **Visual Studio** 2015 or later with C++ desktop workload
-- **XP Toolset** v141_xp installed
-- **Windows SDK** included with Visual Studio
+## Building
 
-### Build Configuration
+### Requirements
 
-- **Configuration**: Release
-- **Platform**: Win32
-- **Toolset**: v141_xp (Visual Studio 2015 with XP support)
+- Visual Studio 2015 or later with C++ desktop workload
+- XP Toolset: `v141_xp` must be installed
+- Windows SDK
 
-## Building the Project
+### Release Build
 
 1. Open `FlexiSoftMdReader.sln` in Visual Studio
 2. Select **Release | Win32** configuration
-3. Right-click the project and select **Build** (or **Ctrl+B**)
-4. The executable is created at: `FlexiSoftMdReader\Release\FlexiSoftMdReader.exe`
+3. **Build** (Ctrl+B)
+4. Output: `FlexiSoftMdReader\Release\FlexiSoftMdReader.exe`
 
-### Build Settings Reference
+### Build Settings (Documented)
 
-**Compiler (ClCompile):**
-- Preprocessor: `WIN32;_WINDOWS;NDEBUG;UNICODE;_UNICODE;WINVER=0x0501;_WIN32_WINNT=0x0501`
-- Runtime Library: `MultiThreaded (/MT)`
-- Subsystem: Windows GUI
+| Setting | Value |
+|---------|-------|
+| Configuration | Release |
+| Platform | Win32 |
+| Toolset | v141_xp |
+| Runtime | MultiThreaded (/MT) |
+| Subsystem | Windows GUI |
+| Minimum Version | 5.01 |
+| Preprocessor | `WINVER=0x0501;_WIN32_WINNT=0x0501` |
 
-**Linker:**
-- Subsystem: Windows
-- Minimum Required Version: 5.01
-
-## Verifying Windows XP Compatibility
-
-Use the `dumpbin` tool to verify the executable targets Windows XP:
+### Verifying Windows XP Compatibility
 
 ```
 dumpbin /headers FlexiSoftMdReader.exe | findstr /i "subsystem machine"
 ```
 
-Expected output:
-
+**Expected output**:
 ```
   14C machine (x86)
   5.01 subsystem version
   2 subsystem (Windows GUI)
 ```
 
-Key values:
-- **14C**: x86 (32-bit)
-- **5.01**: Windows XP subsystem version
-- **2**: Windows GUI application
+If the subsystem version is not `5.01`, the build is not XP-compatible.
 
-## Release Package
+## Release Files
 
-The Release build executable should be distributed as:
+- **dist/FlexiSoftMdReader.exe** – Tracked clean final executable
+- **release/v0.1.0/** – Release package folder with:
+  - `FlexiSoftMdReader.exe` – Final executable
+  - `FlexiSoftMdReader_v0.1.0_win32_xp.zip` – Distribution package
+  - `SHA256SUMS.txt` – Checksum verification
+  - `RELEASE_NOTES.md` – Release information
 
-```
-dist/FlexiSoftMdReader.exe
-```
+## Examples
 
-Or, if using GitHub Releases, upload the executable as a release asset rather than committing build artifacts into source folders.
+See [examples/README.md](examples/README.md) for usage examples and sample Markdown files.
 
-### Release Contents
+## Documentation
 
-- `FlexiSoftMdReader.exe` - Main application (approx. 20-30 KB)
-- No additional runtime libraries required (built with /MT - static runtime)
-- No configuration files needed
+Additional documentation and wiki pages are in [docs/wiki/](docs/wiki/).
 
-## Repository Structure
+## Limitations
 
-```
-FlexiSoftMdReader/
-├── FlexiSoftMdReader/
-│   ├── main.cpp                      # Entry point and window creation
-│   ├── main.h                        # Main headers
-│   ├── markdown.cpp                  # Markdown parsing logic
-│   ├── markdown.h                    # Markdown parser interface
-│   ├── html_view.cpp                 # HTML rendering in Windows
-│   ├── html_view.h                   # HTML view interface
-│   ├── FlexiSoftMdReader.vcxproj    # Visual Studio project file
-│   └── FlexiSoftMdReader.vcxproj.filters
-├── examples/
-│   └── example.md                    # Example Markdown file
-├── FlexiSoftMdReader.sln             # Visual Studio solution
-├── README.md                         # This file
-├── .gitignore                        # Git ignore rules
-└── LICENSE                           # License information (if applicable)
-```
+- Not a full Markdown standard implementation
+- Table rendering is basic (readable text, not full HTML tables)
+- No script execution or dynamic content
+- Limited CSS/styling support
+- Designed for documentation display, not complex formatting
 
-## Notes
+## License
 
-- The viewer is read-only; Markdown files are opened and displayed but not modified
-- File encoding is automatically detected (UTF-8 with or without BOM)
-- Post-build copy steps can be configured locally if needed; they are not part of the public repository
-- This utility is optimized for simplicity and compatibility, not full Markdown standard compliance
+See LICENSE file for details.
 
-## Support
+---
 
-For issues or suggestions related to FlexiSoftMdReader, please report them in the repository issue tracker.
+**GitHub Repository**: https://github.com/KVLab/FlexiSoftMdReader
+
