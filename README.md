@@ -1,33 +1,41 @@
 # FlexiSoftMdReader
 
-FlexiSoftMdReader is a small standalone Win32 Markdown viewer for local project documentation.
+FlexiSoftMdReader is a small standalone Win32 Markdown viewer for local documentation.
 
-It was created for **FlexiSoft Runtime** and for older industrial PCs where Markdown files cannot be opened reliably by the operating system. The main target is simple documentation display on Windows XP and newer Windows systems.
+It is intended for situations where a simple local `.md` viewer is more practical than relying on file associations, a browser, an editor, or modern Windows components. Typical use cases are service documentation, machine documentation, offline documentation packages, and older industrial PCs.
 
 ## Features
 
-* opens local `.md` files in a simple read-only window,
-* supports UTF-8 Markdown files,
+* opens local Markdown files,
+* displays documents read-only,
+* supports UTF-8 text,
 * supports relative image paths,
-* accepts an optional font name or font file as a second argument,
-* does not change file associations,
-* does not need .NET, WebView2, Qt or MFC,
-* can be built as a small Win32 application.
+* supports an optional font argument,
+* supports system font names and TrueType font files,
+* does not modify opened files,
+* does not change Windows file associations,
+* does not require .NET, WebView2, Qt or MFC.
 
-## Usage
+## Quick start
+
+Open one of the included examples:
 
 ```bat
-FlexiSoftMdReader.exe "docs\\README.md"
-FlexiSoftMdReader.exe "docs\\MANUAL_cz.md" "Tahoma"
-FlexiSoftMdReader.exe "docs\\MANUAL_uk.md" "fonts\\NotoSans-Regular.ttf"
+FlexiSoftMdReader.exe "examples\\markdown_basic.md"
+FlexiSoftMdReader.exe "examples\\markdown_tables.md"
+FlexiSoftMdReader.exe "examples\\markdown_images.md"
 ```
 
-The first argument is the Markdown file.
+Open a document with a system font:
 
-The optional second argument can be either a system font name or a font file path.
+```bat
+FlexiSoftMdReader.exe "examples\\markdown_basic.md" "Tahoma"
+```
 
-## Supported Markdown
+Open a document with a bundled font file:
 
-FlexiSoftMdReader is not a full GitHub Markdown renderer. It supports the subset needed for local service documentation.
+```bat
+FlexiSoftMdReader.exe "examples\\markdown_basic.md" "examples\\fonts\\NotoSans-Regular.ttf"
+```
 
 More detailed build and release notes are in the project Wiki.
