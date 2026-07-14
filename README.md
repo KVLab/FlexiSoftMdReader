@@ -38,4 +38,4 @@ Open a document with a bundled font file:
 FlexiSoftMdReader.exe "examples\\markdown_basic.md" "examples\\fonts\\NotoSans-Regular.ttf"
 ```
 
-More detailed build and release notes are in the project Wiki.
+More detailed usage notes and examples are available in the project Wiki.
