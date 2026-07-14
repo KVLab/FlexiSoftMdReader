@@ -15,6 +15,12 @@ x64/
 Win32/
 ipch/
 
+# Build output directories accidentally created under src
+src/[Dd]ebug/
+src/[Rr]elease/
+src/x64/
+src/Win32/
+
 # C/C++ build artifacts
 *.obj
 *.pch
