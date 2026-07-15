@@ -74,6 +74,9 @@
       <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>call "$(SolutionDir)build_tools\post_build_reader.bat" "$(SolutionDir)" "$(OutDir)" "$(TargetPath)" "$(Configuration)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
 
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -90,6 +93,9 @@
       <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>call "$(SolutionDir)build_tools\post_build_reader.bat" "$(SolutionDir)" "$(OutDir)" "$(TargetPath)" "$(Configuration)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
 
   <ItemGroup>
@@ -98,6 +104,10 @@
     <ClCompile Include="html_view.cpp" />
     <ClInclude Include="markdown.h" />
     <ClInclude Include="html_view.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\build_tools\post_build_reader.bat" />
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

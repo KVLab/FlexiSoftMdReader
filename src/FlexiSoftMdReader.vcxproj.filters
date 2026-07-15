@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Build Tools">
+      <UniqueIdentifier>{D9C2F1C3-4D8D-4E6D-9D6D-2BCA6519734B}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,5 +33,11 @@
     <ClInclude Include="html_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\build_tools\post_build_reader.bat">
+      <Filter>Build Tools</Filter>
+    </None>
   </ItemGroup>
 </Project>
