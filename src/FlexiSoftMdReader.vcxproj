@@ -108,6 +108,7 @@
 
   <ItemGroup>
     <None Include="..\build_tools\post_build_reader.bat" />
+    <None Include="..\build_tools\post_build_release_zip.bat" />
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

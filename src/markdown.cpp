@@ -443,7 +443,9 @@ void AppendContentsMenu(std::wstring* html, const std::vector<HeadingEntry>& hea
         html->push_back(static_cast<wchar_t>(L'0' + headings[index].level));
         html->append(L"\"><a href=\"#");
         html->append(headings[index].anchorId);
-        html->append(L"\">");
+        html->append(L"\" onclick=\"return flexisoftScrollTo('");
+        html->append(headings[index].anchorId);
+        html->append(L"');\">");
         html->append(InlineHtml(headings[index].text, directory));
         html->append(L"</a></li>");
     }
@@ -550,15 +552,79 @@ std::wstring ConvertToHtml(const std::wstring& markdownText, const std::wstring&
                 L"html{height:100%;}body.with-contents{height:100%;overflow:hidden;}.contents-column{position:absolute;left:0;top:0;bottom:0;width:220px;overflow:auto;background:#f3f3f3;border-right:1px solid #c8c8c8;padding:16px 12px;}.document-column{position:absolute;left:245px;right:0;top:0;bottom:0;overflow:auto;}.document-content{padding:20px;}.contents-title{font-weight:bold;color:#163a5f;text-transform:uppercase;margin-bottom:10px;}.contents-list{list-style-type:none;margin:0;padding:0;}.contents-list li{margin:0 0 6px 0;line-height:1.25;}.contents-list a{color:#202020;text-decoration:none;}.contents-list a:hover{text-decoration:underline;}.contents-level-2{margin-left:14px !important;}.contents-level-3{margin-left:28px !important;}"
                 L".markdown-image{max-width:100%;height:auto;vertical-align:middle;}.image-missing{display:inline-block;color:#8a1f11;background:#fff1ef;border:1px solid #d9a39c;padding:3px 5px;font-family:Consolas,'Courier New',");
     html.append(cssFontStack);
+    html.append(L";}</style>");
+
     if (hasContents)
     {
-        html.append(L";}</style></head><body class=\"with-contents\"><div class=\"contents-column\">");
+        /*
+            Native fragment navigation is not reliable in the Windows XP
+            WebBrowser after the document was created using document.write().
+
+            Scroll the document panel directly and cancel the normal
+            href="#heading-N" navigation.
+        */
+        html.append(
+            L"<script type=\"text/javascript\">"
+            L"function flexisoftScrollTo(id){"
+                L"var target=document.getElementById(id);"
+                L"if(target&&target.scrollIntoView){"
+                L"target.scrollIntoView(true);"
+            L"}"
+                L"return false;"
+            L"}"
+            L"</script>"
+
+            /*
+                IE6/IE7 do not reliably calculate absolute element sizes
+                from top+bottom and left+right.
+
+                Do not use CSS expressions here. They are evaluated during
+                scrolling and can make the XP viewer noticeably stutter.
+            */
+
+            L"<!--[if lte IE 7]>"
+            L"<style type=\"text/css\">"
+            L"body.with-contents .contents-column{"
+                L"bottom:auto;"
+            L"}"
+            L"body.with-contents .document-column{"
+                L"right:auto;"
+                L"bottom:auto;"
+            L"}"
+            L"</style>"
+            L"<script type=\"text/javascript\">"
+            L"function flexisoftLegacyLayout(){"
+                L"var contents=document.getElementById('contents-column');"
+                L"var documentPanel=document.getElementById('document-column');"
+                L"var root=document.documentElement;"
+                L"var body=document.body;"
+                L"var width;"
+                L"var height;"
+                L"if(!contents||!documentPanel||!body){return;}"
+                L"width=(root&&root.clientWidth)?root.clientWidth:body.clientWidth;"
+                L"height=(root&&root.clientHeight)?root.clientHeight:body.clientHeight;"
+                L"contents.style.height=Math.max(height-32,0)+'px';"
+                L"documentPanel.style.width=Math.max(width-245,0)+'px';"
+                L"documentPanel.style.height=Math.max(height,0)+'px';"
+            L"}"
+            L"if(window.attachEvent){"
+                L"window.attachEvent('onload',flexisoftLegacyLayout);"
+                L"window.attachEvent('onresize',flexisoftLegacyLayout);"
+            L"}"
+            L"</script>"
+            L"<![endif]-->"
+            L"</head><body class=\"with-contents\">"
+            L"<div id=\"contents-column\" class=\"contents-column\">");
+
         AppendContentsMenu(&html, headings, directory);
-        html.append(L"</div><div class=\"document-column\"><div class=\"document-content\">\n");
+        html.append(
+            L"</div>"
+            L"<div id=\"document-column\" class=\"document-column\">"
+            L"<div class=\"document-content\">\n");
     }
     else
     {
-        html.append(L";}</style></head><body><div class=\"document-content\">\n");
+        html.append(L"</head><body><div class=\"document-content\">\n");
     }
 
     while (index < lines.size())

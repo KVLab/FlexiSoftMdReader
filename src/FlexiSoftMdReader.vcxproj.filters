@@ -39,5 +39,8 @@
     <None Include="..\build_tools\post_build_reader.bat">
       <Filter>Build Tools</Filter>
     </None>
+    <None Include="..\build_tools\post_build_release_zip.bat">
+      <Filter>Build Tools</Filter>
+    </None>
   </ItemGroup>
 </Project>

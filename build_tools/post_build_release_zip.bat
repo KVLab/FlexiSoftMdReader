@@ -13,8 +13,8 @@ rem       build_tools\post_build_release_zip.bat
 rem     FlexiSoftMdReader_Release\
 rem
 rem Output:
-rem   parent\FlexiSoftMdReader_Release\FlexiSoftMdReader_v1.0_win32_xp\
-rem   parent\FlexiSoftMdReader_Release\FlexiSoftMdReader_v1.0_win32_xp.zip
+rem   parent\FlexiSoftMdReader_Release\FlexiSoftMdReader_v1.0.1_win32_xp\
+rem   parent\FlexiSoftMdReader_Release\FlexiSoftMdReader_v1.0.1_win32_xp.zip
 rem   parent\FlexiSoftMdReader_Release\SHA256SUMS.txt
 
 set "ROOT=%~1"
@@ -39,7 +39,8 @@ set "SRC_EXAMPLES=%ROOT%examples"
 set "SRC_EXE=%ROOT%Release\FlexiSoftMdReader.exe"
 
 set "RELEASE_ROOT=%PARENT%FlexiSoftMdReader_Release"
-set "PACKAGE_NAME=FlexiSoftMdReader_v1.0_win32_xp"
+set "RELEASE_VERSION=1.0.1"
+set "PACKAGE_NAME=FlexiSoftMdReader_v%RELEASE_VERSION%_win32_xp"
 set "PACKAGE_DIR=%RELEASE_ROOT%\%PACKAGE_NAME%"
 set "ZIP_FILE=%RELEASE_ROOT%\%PACKAGE_NAME%.zip"
 set "SHA_FILE=%RELEASE_ROOT%\SHA256SUMS.txt"
@@ -137,7 +138,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$sha='%SHA_FILE%';" ^
   "$exeHash=(Get-FileHash -Algorithm SHA256 -LiteralPath $exe).Hash.ToUpperInvariant();" ^
   "$zipHash=(Get-FileHash -Algorithm SHA256 -LiteralPath $zip).Hash.ToUpperInvariant();" ^
-  "$content=($exeHash + '  FlexiSoftMdReader.exe' + [Environment]::NewLine + $zipHash + '  FlexiSoftMdReader_v1.0_win32_xp.zip' + [Environment]::NewLine);" ^
+  "$content=($exeHash + '  FlexiSoftMdReader.exe' + [Environment]::NewLine + $zipHash + '  %PACKAGE_NAME%.zip' + [Environment]::NewLine);" ^
   "[IO.File]::WriteAllText($sha, $content, [Text.Encoding]::ASCII);"
 
 if errorlevel 1 (

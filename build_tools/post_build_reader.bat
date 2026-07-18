@@ -24,6 +24,11 @@ echo [post_build_reader] OUTDIR=%OUTDIR%
 echo [post_build_reader] TARGET=%TARGET%
 echo [post_build_reader] CONFIG=%CONFIG%
 
+if /I not "%CONFIG%"=="Release" (
+  echo [post_build_reader] INFO: release packaging and installer-stage sync skipped for %CONFIG%
+  exit /b 0
+)
+
 if not exist "%OUTDIR%" mkdir "%OUTDIR%" >nul 2>nul
 
 rem ---------------------------------------------------------------------------
